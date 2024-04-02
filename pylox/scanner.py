@@ -70,5 +70,18 @@ class Scanner:
         """
         c = self._advance()
         match c:
-            case ';':
-                self._add_token(Token.Type.SEMICOLON)
+            # Single characters
+            case '(': self._add_token(Token.Type.LEFT_PAREN)
+            case ')': self._add_token(Token.Type.RIGHT_PAREN)
+            case '{': self._add_token(Token.Type.LEFT_BRACE)
+            case '}': self._add_token(Token.Type.RIGHT_BRACE)
+            case '.': self._add_token(Token.Type.DOT)
+            case ',': self._add_token(Token.Type.COMMA)
+            case '-': self._add_token(Token.Type.MINUS)
+            case '+': self._add_token(Token.Type.PLUS)
+            case ';': self._add_token(Token.Type.SEMICOLON)
+            case '*': self._add_token(Token.Type.STAR)
+
+            # Default
+            case _:
+                raise ValueError("Not a valid token: {c!r}")

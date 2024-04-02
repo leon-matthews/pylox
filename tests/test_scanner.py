@@ -25,7 +25,7 @@ class EmptySourceTest(TestCase):
         self.assertEqual(repr(tokens), "[<Token:EOF>]")
 
 
-class SingleCharacterTest(TestCase):
+class SingleCharacterTokensTest(TestCase):
     def test_at_end(self) -> None:
         scanner = Scanner(";")
         self.assertFalse(scanner._at_end())
@@ -37,7 +37,7 @@ class SingleCharacterTest(TestCase):
         self.assertEqual(char, ';')
         self.assertTrue(scanner._at_end())
 
-    def test_single_character(self) -> None:
+    def test_single_semicolon(self) -> None:
         source = ";"
         scanner = Scanner(source)
         tokens = scanner.scan_tokens()
@@ -56,3 +56,22 @@ class SingleCharacterTest(TestCase):
             'type_': Token.Type.SEMICOLON,
         }
         self.assertEqual(vars(semicolon), expected)
+
+    def test_all_singles(self) -> None:
+        source = "(){}.,-+;*"
+        scanner = Scanner(source)
+        tokens = [repr(t) for t in scanner.scan_tokens()]
+        expected = [
+            '<Token:LEFT_PAREN>',
+            '<Token:RIGHT_PAREN>',
+            '<Token:LEFT_BRACE>',
+            '<Token:RIGHT_BRACE>',
+            '<Token:DOT>',
+            '<Token:COMMA>',
+            '<Token:MINUS>',
+            '<Token:PLUS>',
+            '<Token:SEMICOLON>',
+            '<Token:STAR>',
+            '<Token:EOF>',
+        ]
+        self.assertEqual(tokens, expected)
