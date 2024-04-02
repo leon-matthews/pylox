@@ -4,7 +4,7 @@ Scanner produces list of tokens from program source.
 
 from typing import Any
 
-from .tokens import Token, TokenType
+from .tokens import SINGLE_CHARACTER_TOKENS, Token, TokenType
 
 
 class Scanner:
@@ -70,17 +70,9 @@ class Scanner:
         """
         c = self._advance()
         match c:
-            # Single characters
-            case '(': self._add_token(TokenType.LEFT_PAREN)
-            case ')': self._add_token(TokenType.RIGHT_PAREN)
-            case '{': self._add_token(TokenType.LEFT_BRACE)
-            case '}': self._add_token(TokenType.RIGHT_BRACE)
-            case '.': self._add_token(TokenType.DOT)
-            case ',': self._add_token(TokenType.COMMA)
-            case '-': self._add_token(TokenType.MINUS)
-            case '+': self._add_token(TokenType.PLUS)
-            case ';': self._add_token(TokenType.SEMICOLON)
-            case '*': self._add_token(TokenType.STAR)
+            # Single character
+            case c if c in SINGLE_CHARACTER_TOKENS:
+                self._add_token(SINGLE_CHARACTER_TOKENS[c])
 
             # Default
             case _:

@@ -58,7 +58,7 @@ class SingleCharacterTokensTest(TestCase):
         self.assertEqual(vars(semicolon), expected)
 
     def test_all_singles(self) -> None:
-        source = "(){}.,-+;*"
+        source = "(){}.,-+;/*"
         scanner = Scanner(source)
         tokens = [repr(t) for t in scanner.scan_tokens()]
         expected = [
@@ -71,6 +71,7 @@ class SingleCharacterTokensTest(TestCase):
             '<Token:MINUS>',
             '<Token:PLUS>',
             '<Token:SEMICOLON>',
+            '<Token:SLASH>',
             '<Token:STAR>',
             '<Token:EOF>',
         ]

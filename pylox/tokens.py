@@ -24,6 +24,22 @@ TokenType = Enum('Type', (
 )
 
 
+SINGLE_CHARACTER_TOKENS = {
+    '(': TokenType.LEFT_PAREN,
+    ')': TokenType.RIGHT_PAREN,
+    '{': TokenType.LEFT_BRACE,
+    '}': TokenType.RIGHT_BRACE,
+    ',': TokenType.COMMA,
+    '.': TokenType.DOT,
+    '-': TokenType.MINUS,
+    '+': TokenType.PLUS,
+    ';': TokenType.SEMICOLON,
+    '/': TokenType.SLASH,
+    '*': TokenType.STAR,
+}
+
+
+
 class Token:
     def __init__(self, type_: TokenType, lexeme: str, literal: Any, line: int):
         """
