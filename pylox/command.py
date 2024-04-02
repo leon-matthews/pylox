@@ -58,7 +58,7 @@ class CommandLine:
         path = self.options.file
         logger.debug(f"Reading lines from: {path}")
         num_lines = 0
-        with utils.magic_open(path) as fp:
+        with open(path) as fp:
             for line in fp:
                 num_lines += 1
                 yield line.strip()
