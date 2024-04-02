@@ -38,8 +38,7 @@ class SingleCharacterTokensTest(TestCase):
         self.assertTrue(scanner._at_end())
 
     def test_single_semicolon(self) -> None:
-        source = ";"
-        scanner = Scanner(source)
+        scanner = Scanner(";")
         tokens = scanner.scan_tokens()
         expected = [
             '<Token:SEMICOLON>',
@@ -58,8 +57,7 @@ class SingleCharacterTokensTest(TestCase):
         self.assertEqual(vars(semicolon), expected)
 
     def test_all_singles(self) -> None:
-        source = "(){}.,-+;/*"
-        scanner = Scanner(source)
+        scanner = Scanner("(){}.,-+;/*")
         tokens = [repr(t) for t in scanner.scan_tokens()]
         expected = [
             '<Token:LEFT_PAREN>',
@@ -76,3 +74,9 @@ class SingleCharacterTokensTest(TestCase):
             '<Token:EOF>',
         ]
         self.assertEqual(tokens, expected)
+
+    def test_unexpected(self) -> None:
+        scanner = Scanner("(%)")
+        message = r"^Unexpected character: '%'$"
+        with self.assertRaisesRegex(ValueError, message):
+            scanner.scan_tokens()

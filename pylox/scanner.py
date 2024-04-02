@@ -76,4 +76,4 @@ class Scanner:
 
             # Default
             case _:
-                raise ValueError("Not a valid token: {c!r}")
+                raise ValueError(f"Unexpected character: {c!r}")
