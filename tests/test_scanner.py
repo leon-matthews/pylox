@@ -2,7 +2,7 @@
 from unittest import TestCase
 
 from pylox.scanner import Scanner
-from pylox.tokens import Token
+from pylox.tokens import Token, TokenType
 
 
 class EmptySourceTest(TestCase):
@@ -53,7 +53,7 @@ class SingleCharacterTokensTest(TestCase):
             'lexeme': ';',
             'line': 1,
             'literal': None,
-            'type_': Token.Type.SEMICOLON,
+            'type_': TokenType.SEMICOLON,
         }
         self.assertEqual(vars(semicolon), expected)
 

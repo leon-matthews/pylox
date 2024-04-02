@@ -3,28 +3,29 @@ from enum import Enum
 from typing import Any
 
 
+TokenType = Enum('Type', (
+    # Single character tokens
+    'LEFT_PAREN RIGHT_PAREN LEFT_BRACE RIGHT_BRACE '
+    'COMMA DOT MINUS PLUS SEMICOLON SLASH STAR '
+
+    # One or two characters
+    'BANG BANG_EQUAL EQUAL EQUAL_EQUAL '
+    'GREATER GREATER_EQUAL LESS LESS_EQUAL '
+
+    # Literals
+    'IDENTIFIER STRING NUMBER '
+
+    # Keywords
+    'AND CLASS ELSE FALSE FUN FOR IF NIL OR '
+    'PRINT RETURN SUPER THIS TRUE VAR WHILE '
+
+    # Last!
+    'EOF')
+)
+
+
 class Token:
-    Type = Enum('Type', (
-        # Single character tokens
-        'LEFT_PAREN RIGHT_PAREN LEFT_BRACE RIGHT_BRACE '
-        'COMMA DOT MINUS PLUS SEMICOLON SLASH STAR '
-
-        # One or two characters
-        'BANG BANG_EQUAL EQUAL EQUAL_EQUAL '
-        'GREATER GREATER_EQUAL LESS LESS_EQUAL '
-
-        # Literals
-        'IDENTIFIER STRING NUMBER '
-
-        # Keywords
-        'AND CLASS ELSE FALSE FUN FOR IF NIL OR '
-        'PRINT RETURN SUPER THIS TRUE VAR WHILE '
-
-        # Last!
-        'EOF')
-    )
-
-    def __init__(self, type_: Type, lexeme: str, literal: Any, line: int):
+    def __init__(self, type_: TokenType, lexeme: str, literal: Any, line: int):
         """
         Initialiser.
 
@@ -49,7 +50,7 @@ class Token:
 
     def __str__(self) -> str:
         extra = ''
-        if self.type_ is self.Type.IDENTIFIER:
+        if self.type_ is TokenType.IDENTIFIER:
             extra = f":{self.lexeme}"
         if self.literal is not None:
             extra = f":{self.literal}"

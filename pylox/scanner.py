@@ -4,7 +4,7 @@ Scanner produces list of tokens from program source.
 
 from typing import Any
 
-from .tokens import Token
+from .tokens import Token, TokenType
 
 
 class Scanner:
@@ -38,10 +38,10 @@ class Scanner:
             self._scan_token()
 
         # Add an EOF
-        self._add_token(Token.Type.EOF)
+        self._add_token(TokenType.EOF)
         return self.tokens
 
-    def _add_token(self, type_: Token.Type, literal: Any = None):
+    def _add_token(self, type_: TokenType, literal: Any = None):
         text = self.source[self.start:self.current]
         token = Token(type_, text, literal, self.line)
         self.tokens.append(token)
@@ -71,16 +71,16 @@ class Scanner:
         c = self._advance()
         match c:
             # Single characters
-            case '(': self._add_token(Token.Type.LEFT_PAREN)
-            case ')': self._add_token(Token.Type.RIGHT_PAREN)
-            case '{': self._add_token(Token.Type.LEFT_BRACE)
-            case '}': self._add_token(Token.Type.RIGHT_BRACE)
-            case '.': self._add_token(Token.Type.DOT)
-            case ',': self._add_token(Token.Type.COMMA)
-            case '-': self._add_token(Token.Type.MINUS)
-            case '+': self._add_token(Token.Type.PLUS)
-            case ';': self._add_token(Token.Type.SEMICOLON)
-            case '*': self._add_token(Token.Type.STAR)
+            case '(': self._add_token(TokenType.LEFT_PAREN)
+            case ')': self._add_token(TokenType.RIGHT_PAREN)
+            case '{': self._add_token(TokenType.LEFT_BRACE)
+            case '}': self._add_token(TokenType.RIGHT_BRACE)
+            case '.': self._add_token(TokenType.DOT)
+            case ',': self._add_token(TokenType.COMMA)
+            case '-': self._add_token(TokenType.MINUS)
+            case '+': self._add_token(TokenType.PLUS)
+            case ';': self._add_token(TokenType.SEMICOLON)
+            case '*': self._add_token(TokenType.STAR)
 
             # Default
             case _:
