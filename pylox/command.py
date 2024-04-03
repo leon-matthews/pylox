@@ -5,6 +5,7 @@ from pathlib import Path
 import time
 from typing import Iterator
 
+from .lox import Lox
 
 logger = logging.getLogger(__name__)
 
@@ -33,14 +34,15 @@ class CommandLine:
     """
     def __init__(self, args: list[str]):
         self.options = self.parse_options(args)
+        pp(self.options)
         self.setup_logging()
 
     def main(self) -> int:
-        start = time.perf_counter()
-        count = 0
-        lines = self.readlines()
-        elapsed = (time.perf_counter() - start) * 1000
-        logger.debug(f"Ran for {elapsed:.1f}ms")
+        lox = Lox()
+        if self.options.file:
+            lox.run_file(self.options.file)
+        else:
+            lox.run_prompt()
         return 0
 
     def parse_options(self, args: list[str]) -> argparse.Namespace:
@@ -49,26 +51,16 @@ class CommandLine:
         parser.add_argument(
             'file',
             metavar='FILE',
+            nargs='?',
             type=argparse_existing_file,
             help="Script file")
         options = parser.parse_args(args)
         return options
 
-    def readlines(self) -> Iterator[str]:
-        path = self.options.file
-        logger.debug(f"Reading lines from: {path}")
-        num_lines = 0
-        with open(path) as fp:
-            for line in fp:
-                num_lines += 1
-                yield line.strip()
-        logger.debug(f"Read {num_lines:,} lines from: {path.name}")
-
     def setup_logging(self) -> None:
-        level = logging.DEBUG
         logging.basicConfig(
             force=True,
             format="{levelname}: {message}",
-            level=level,
+            level=logging.DEBUG,
             style='{',
         )
