@@ -46,7 +46,9 @@ class SingleCharacterTokensTest(TestCase):
         ]
         self.assertEqual([repr(t) for t in tokens], expected)
 
-        # Dig into SEMICOLON token
+    def test_single_semicolon_details(self) -> None:
+        scanner = Scanner(";")
+        tokens = scanner.scan_tokens()
         semicolon = tokens[0]
         expected = {
             'lexeme': ';',
