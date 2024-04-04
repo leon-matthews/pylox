@@ -24,6 +24,12 @@ TokenType = Enum('Type', (
 )
 
 
+KEYWORDS = [
+    'and', 'class', 'clock', 'false', 'fun',
+    'nil', 'or', 'print', 'true', 'var', 'while',
+]
+
+
 SINGLE_CHARACTER_TOKENS = {
     '(': TokenType.LEFT_PAREN,
     ')': TokenType.RIGHT_PAREN,
@@ -37,7 +43,6 @@ SINGLE_CHARACTER_TOKENS = {
     '/': TokenType.SLASH,
     '*': TokenType.STAR,
 }
-
 
 
 class Token:

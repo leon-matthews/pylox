@@ -2,10 +2,9 @@
 import argparse
 import logging
 from pathlib import Path
-import time
-from typing import Iterator
 
 from .lox import Lox
+
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +33,6 @@ class CommandLine:
     """
     def __init__(self, args: list[str]):
         self.options = self.parse_options(args)
-        pp(self.options)
         self.setup_logging()
 
     def main(self) -> int:

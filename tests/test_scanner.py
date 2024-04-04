@@ -2,7 +2,7 @@
 from unittest import TestCase
 
 from pylox.scanner import Scanner
-from pylox.tokens import Token, TokenType
+from pylox.tokens import TokenType
 
 
 class EmptySourceTest(TestCase):

@@ -3,8 +3,11 @@ Main language runner.
 """
 
 from pathlib import Path
+import readline
 
+from .completion import Completer
 from .scanner import Scanner
+from .tokens import KEYWORDS
 
 
 class Lox:
@@ -41,6 +44,25 @@ class Lox:
         self.run(source)
 
     def run_prompt(self) -> None:
+        """
+        Run REPL prompt.
+
+        Use 'exit', 'quit', or ctrl+d to exit.
+
+        Todo:
+            Add identifiers to completer.
+        """
+        completer = Completer(KEYWORDS)
+        readline.set_completer(completer.complete)
+        readline.parse_and_bind('tab: complete')
+
         while True:
-            string = input('pylox> ')
-            self.run(string)
+            try:
+                source = input('lox> ')
+            except EOFError:
+                break
+
+            if source.casefold() in ('quit', 'exit'):
+                break
+
+            self.run(source)
