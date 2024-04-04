@@ -38,12 +38,23 @@ class Lox:
         for token in tokens:
             print(repr(token))
 
-    def run_file(self, path: Path) -> None:
-        with open(path, 'rt') as fp:
+    def run_file(self, path: Path) -> int:
+        """
+        Open and run script file.
+
+        Args:
+            path:
+                Path to UTF-8 script file.
+
+        Returns:
+            Error code, zero on normal exit.
+        """
+        with open(path, 'rt', encoding='utf-8') as fp:
             source = fp.read()
         self.run(source)
+        return 0
 
-    def run_prompt(self) -> None:
+    def run_prompt(self) -> int:
         """
         Run REPL prompt.
 
@@ -51,6 +62,9 @@ class Lox:
 
         Todo:
             Add identifiers to completer.
+
+        Returns:
+            Error code, zero on normal exit.
         """
         completer = Completer(KEYWORDS)
         readline.set_completer(completer.complete)
@@ -60,9 +74,12 @@ class Lox:
             try:
                 source = input('lox> ')
             except EOFError:
-                break
+                return 0
 
             if source.casefold() in ('quit', 'exit'):
-                break
+                return 0
 
             self.run(source)
+
+        # Unexpected exit
+        return 1

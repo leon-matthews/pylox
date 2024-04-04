@@ -38,10 +38,10 @@ class CommandLine:
     def main(self) -> int:
         lox = Lox()
         if self.options.file:
-            lox.run_file(self.options.file)
+            error_code = lox.run_file(self.options.file)
         else:
-            lox.run_prompt()
-        return 0
+            error_code = lox.run_prompt()
+        return error_code
 
     def parse_options(self, args: list[str]) -> argparse.Namespace:
         script_name = Path(__file__).parent.name
