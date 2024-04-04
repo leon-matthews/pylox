@@ -4,6 +4,7 @@ Main language runner.
 
 from pathlib import Path
 import readline
+import sys
 
 from .completion import Completer
 from .scanner import Scanner
@@ -14,11 +15,12 @@ class Lox:
     def __init__(self) -> None:
         self.had_error = False
 
-    def error(self, line: int, error: str) -> None:
-        pass
+    def error(self, line: int, message: str) -> None:
+        self.report(line, "", message)
 
     def report(self, line: int, where: str, message: str) -> None:
-        pass
+        print(f"[line {line}] Error{where}: {message}", file=sys.stderr)
+        self.had_error = True
 
     def run(self, source: str) -> None:
         """
@@ -52,7 +54,9 @@ class Lox:
         with open(path, 'rt', encoding='utf-8') as fp:
             source = fp.read()
         self.run(source)
-        return 0
+
+        error_code = 1 if self.had_error else 0
+        return error_code
 
     def run_prompt(self) -> int:
         """
